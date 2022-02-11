@@ -1,0 +1,108 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(38, 35, 35);
+  color: aliceblue;
+  font-family: "Poppins", sans-serif;
+}
+
+header {
+  background: linear-gradient(122deg, #e91e63, #673ab7);
+  padding: 1.75rem 0;
+}
+
+nav {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+nav a {
+  color: #f5f5f5;
+  text-decoration: none;
+  padding: 1.75rem;
+}
+
+nav a:is(:hover, :focus-visible) {
+  background-color: #ffe4c4;
+  color: #222;
+  outline: 0;
+}
+section .filmesSelected {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+input {
+  background-color: #7dacdd;
+  color: #060606;
+  border-color: #bfdfff;
+}
+
+input #search {
+  background-color: #6ea1d5;
+  color: #262626;
+  border-color: #87c2ff;
+}
+
+.movies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 20px;
+}
+.selected {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 20px;
+}
+li {
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+  justify-items: center;
+  align-items: start;
+  padding: 13px;
+  margin-top: 1rem;
+  background: linear-gradient(122deg, #e91e63, #673ab7);
+  border-radius: 22px;
+  box-shadow: 10px 10px 40px -30px;
+  list-style-type: none;
+}
+
+button {
+  margin-top: 7px;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 0;
+  border-radius: 32px;
+}
+
+button.delet:hover{
+  background: red;
+
+}
+
+button:hover {
+  background: #4d3ab7;
+}
+.movies li img {
+}
+
+h2 {
+  text-align-last: center;
+  font-size: larger;
+}
+
+img {
+  max-width: 300px;
+  align-self: center;
+}
