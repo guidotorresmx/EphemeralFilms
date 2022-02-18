@@ -37,8 +37,23 @@
   
   <div class="uncheck"></div>
   <div class="movies"></div>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+  apiKey: "AIzaSyAt3jdMn9h8Mx-kubozRF6KRrmMCUi3s18",
+  authDomain: "nomesobrenome-a1747.firebaseapp.com",
+  databaseURL: "https://nomesobrenome-a1747-default-rtdb.firebaseio.com",
+  projectId: "nomesobrenome-a1747",
+  storageBucket: "nomesobrenome-a1747.appspot.com",
+  messagingSenderId: "53306747867",
+  appId: "1:53306747867:web:27566e9ad4c1078a9a95fe"
+};
+
+        firebase.initializeApp(firebaseConfig)
+    </script> 
   
-  <script src="./script.js"></script>
-  <!-- <script src="./server.js"></script> -->
+  <script src="./scripts.js"></script>
+  <script src="./form.js"></script>
 </body>
 </html>
