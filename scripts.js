@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.querySelector('#search')
+  const secData = document.querySelector('.filmesSelected')
   const form = document.querySelector('form')
   const select = document.getElementsByClassName('select');
-  const db = firebase.firestore();
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -62,23 +63,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function check(element) {
+  const db = firebase.firestore();
 
   const selected = element.parentElement;
   console.log(selected)
-  const db = firebase.firestore();
-  db.collection('Users').add({
-    movie: selected.innerHTML,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-
-  }).then(function (docRef) {
-    console.log('Document written with id:', docRef.id);
-    //    getUsers();
-    selected = '';
 
 
-  }).catch(function (err) {
-    console.log(error, err)
-  })
 
   selected.classList.toggle('uncheck')
   console.log(element)
@@ -88,8 +78,73 @@ function check(element) {
   element.innerText = "Delete"
   element.setAttribute('class', "delet")
   if (selected.className !== "") {
-    selected.remove()
+    db.collection("Users")
+      .doc(movie)
+      .delete()
+      .then(() => console.log("Document successfully deleted"))
+      .catch((err) => console.log("Error deleting document", err))
   } else {
     colocar.appendChild(selected)
   }
+  db.collection('Users').add({
+    movie: selected.innerHTML,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
+  }).then(function (docRef) {
+    console.log('Document written with id:', docRef.id);
+    console.log(docRef)
+    selected = '';
+
+
+  }).catch(function (err) {
+    console.log(error, err)
+  })
+
+  db.collection("Users")
+    .orderBy("timestamp")
+    .onSnapshot(
+      (querySnapshot) => {
+        let output = '';
+        const secData = document.querySelector('.filmesSelected')
+
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          output += `<li>${doc.data().movie}</li>`;
+        });
+
+        secData.innerHTML = output;
+      },
+      (error) => {
+        console.log(error)
+      }
+
+    );
 }
+
+function deleteFilm(id) {
+  db.collection("Users")
+    .doc(id)
+    .delete()
+    .then(() => console.log("Document successfully deleted"))
+    .catch((err) => console.log("Error deleting document", err))
+}
+const db = firebase.firestore();
+db.collection("Users")
+  .orderBy("timestamp")
+  .onSnapshot(
+    (querySnapshot) => {
+      let output = '';
+      const secData = document.querySelector('.filmesSelected')
+
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data())
+        output += `<li>${doc.data().movie}</li>`;
+      });
+
+      secData.innerHTML = output;
+    },
+    (error) => {
+      console.log(error)
+    }
+
+  );
