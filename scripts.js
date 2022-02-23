@@ -1,8 +1,12 @@
+const db = firebase.firestore();
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.querySelector('#search')
   const secData = document.querySelector('.filmesSelected')
   const form = document.querySelector('form')
-  const select = document.getElementsByClassName('select');
+  const select = document.getElementsByClassName('select')
+  const filmList = document.getElementById('filmeList')
+
+  // filmList.addEventListener('click', )
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -24,9 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function searchMovie() {
     let searchValue = searchInput.value
-    console.log(searchValue)
+    console.log("searchValue", searchValue)
 
-    fetch(`https://imdb8.p.rapidapi.com/auto-complete?q=${searchValue}`, {
+     fetch(`https://imdb8.p.rapidapi.com/auto-complete?q=${searchValue}`, {
       method: "GET",
       headers: {
         "x-rapidapi-host": "imdb8.p.rapidapi.com",
@@ -37,18 +41,19 @@ document.addEventListener("DOMContentLoaded", function () {
         response.json()
           .then(data => {
             const list = data.d
-            console.log(list)
+
             removeElement()
             // document.querySelector('.uncheck').innerHTML = ""
             list.forEach((item) => {
               let id = item.id;
               if (id.slice(0, 2) === 'tt') {
                 const name = item.l;
-                console.log(name);
+
                 const poster = item.i.imageUrl
-                console.log(poster);
+
 
                 const movie = `<li class="uncheck"><h2>${name}</h2> <img src="${poster}"><button onclick="check(this)" class="choose">Select</button></li>`
+                
                 document.querySelector('.movies').innerHTML += movie;
               }
             })
@@ -66,40 +71,44 @@ function check(element) {
   const db = firebase.firestore();
 
   const selected = element.parentElement;
-  console.log(selected)
+  console.log("selected", selected)
+  
+  // selected.classList.toggle('uncheck')
+  if(element.getAttribute('class') === 'delet'){
+    element.innerHTML = "SELECT";
+    element.removeAttribute('class', 'delet')
+    element.setAttribute('class', 'choose')
 
-
-
-  selected.classList.toggle('uncheck')
-  console.log(element)
-
+    let getid = selected.getAttribute('id')
+    console.log('esse eh o getid', getid)
+    db.collection('Users').doc(`${getid}`).delete()
+  }else{
   const colocar = document.querySelector('.filmesSelected')
-  console.log(colocar)
+  
+
   element.innerText = "Delete"
   element.setAttribute('class', "delet")
-  if (selected.className !== "") {
-    db.collection("Users")
-      .doc(movie)
-      .delete()
-      .then(() => console.log("Document successfully deleted"))
-      .catch((err) => console.log("Error deleting document", err))
-  } else {
-    colocar.appendChild(selected)
-  }
+ 
   db.collection('Users').add({
     movie: selected.innerHTML,
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    
 
-  }).then(function (docRef) {
-    console.log('Document written with id:', docRef.id);
-    console.log(docRef)
+  }).then(function (doc) {
+    console.log('Document written with id:', doc.id);
+    selected.setAttribute("id", doc.id)
     selected = '';
+
 
 
   }).catch(function (err) {
     console.log(error, err)
   })
+}
+    showMovies()  
+}
 
+function showMovies(){
   db.collection("Users")
     .orderBy("timestamp")
     .onSnapshot(
@@ -108,8 +117,9 @@ function check(element) {
         const secData = document.querySelector('.filmesSelected')
 
         querySnapshot.forEach((doc) => {
-          console.log(doc.data())
-          output += `<li>${doc.data().movie}</li>`;
+          console.log("doc.data do forEach", doc.data())
+          output += `<li id='${doc.id}' >${doc.data().movie}</li>`;
+          console.log("doc.id", doc.id)
         });
 
         secData.innerHTML = output;
@@ -119,32 +129,7 @@ function check(element) {
       }
 
     );
-}
-
-function deleteFilm(id) {
-  db.collection("Users")
-    .doc(id)
-    .delete()
-    .then(() => console.log("Document successfully deleted"))
-    .catch((err) => console.log("Error deleting document", err))
-}
-const db = firebase.firestore();
-db.collection("Users")
-  .orderBy("timestamp")
-  .onSnapshot(
-    (querySnapshot) => {
-      let output = '';
-      const secData = document.querySelector('.filmesSelected')
-
-      querySnapshot.forEach((doc) => {
-        console.log(doc.data())
-        output += `<li>${doc.data().movie}</li>`;
-      });
-
-      secData.innerHTML = output;
-    },
-    (error) => {
-      console.log(error)
     }
 
-  );
+
+showMovies()
