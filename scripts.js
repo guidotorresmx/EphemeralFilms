@@ -121,7 +121,7 @@ function showMovies(){
           output += `<li id='${doc.id}' >${doc.data().movie}</li>`;
           console.log("doc.id", doc.id)
         });
-
+        //DISPLAY MOVIE LIST
         secData.innerHTML = output;
       },
       (error) => {

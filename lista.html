@@ -10,31 +10,34 @@
   <title>Ephemeral Film List</title>
 </head>
 <body>
-   
+  
+  
   <header>
     <nav>
-      
       <a href="index.html">Make your ephemeral film list</a>
-      
-      
-      <a href="login.html">login</a>
-
-      <a href="lista.html">Cretate list + </a>
-     
-      <a href="createAccount.html">Cretate account + </a>
       
     </nav>
   </header>
-  
-  <section>
-    <details>
-      <summary id='filmList'>Lista 1</summary>
-      <section class="filmesSelected">
-        
-        </section>
-    </details>
-  </section>
+  <h2></h2>
 
+<section>
+  <details>
+    <summary id='filmList'>Filme List</summary>
+    <section class="filmesSelected">
+      
+      </section>
+  </details>
+</section>
+
+  <form  id="form">
+    Search:
+    <input type="text" placeholder="movies/tv shows" id="search">
+    <input  onclick="removeElement"type="submit" value="search">
+
+  </form>
+  
+  <div class="uncheck"></div>
+  <div class="movies"></div>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script>
