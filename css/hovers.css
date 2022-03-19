@@ -1,0 +1,14 @@
+button.delet:hover {
+    background: red;
+}
+
+button:hover {
+    background: #4d3ab7;
+}
+
+.movies li:hover,
+.filmesSelected li:hover {
+    background: #4d3ab7;
+    box-shadow: 15px 15px 50px -30px;
+    transform: scale(1.05);
+}

@@ -1,0 +1,28 @@
+.mdl-textfield__label {
+    color: rgba(255, 255, 255, 0.26);
+}
+
+.mdl-textfield__input {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.mdl-button.small-button {
+    color: rgba(255, 255, 255, 0.74);
+}
+
+.mdl-button.large-button {
+    min-width: 22rem;
+    color: rgba(255, 255, 255, 0.74);
+}
+
+.mdl-textfield {
+    min-width: 22rem;
+}
+
+.mdl-textfield:hover {
+    transform: scale(1.05);
+}
+
+.mdl-button:hover {
+    transform: scale(1.05);
+}
